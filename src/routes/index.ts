@@ -1,8 +1,6 @@
 import { Router } from 'express';
-import *  as helloWorldController from '../controllers/HelloWorldController';
+import { createUser } from '../controllers/userController'
 
-const route = Router();
+export const route = Router();
 
-route.get('/', helloWorldController.helloWorld);
-
-export default route;
+route.post('/user', createUser);
