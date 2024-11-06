@@ -1,24 +1,22 @@
+import { prisma } from "../libs/prisma"
 import { Prisma } from "@prisma/client"
 
-import * as userModel from '../models/user.model'
-
 export const createUser = async (data: Prisma.UserCreateInput ) =>{
-  return await userModel.createUser(data);
+  return await prisma.user.create({ data })
 }
 
 export const createUsers = async (users: Prisma.UserCreateInput[] ) =>{
-  return await userModel.createUsers(users);
+  return await prisma.user.createMany({data: users, skipDuplicates: true})
 }
 
 export const getAllUsers = async () =>{
-  return await userModel.getAllUsers();
+  return await prisma.user.findMany();
 }
 
 export const updateUser = async (id: number, data: Prisma.UserUpdateInput) => {
-  return await userModel.updateUser(id, data)
+  return await prisma.user.update({ where: { id }, data })
 }
 
 export const deleteUser = async (id: number) => {
-  return await userModel.deleteUser(id)
+  return await prisma.user.delete({ where: { id } })
 }
-
