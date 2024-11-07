@@ -20,6 +20,7 @@ model User {
   role      Role     @default(USER)
   name      String
   email     String   @unique
+  password  String?
   Post      Post[]
 
   // mapping

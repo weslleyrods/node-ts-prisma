@@ -5,7 +5,7 @@ import {
   getAllUsers as getAllUsersService,
   updateUser as updateUserService,
   deleteUser as deleteUserService
-} from '../services/user';
+} from '../services/user.service';
 
 export const createUser = async(req: Request, res: Response)=> {
   try {
