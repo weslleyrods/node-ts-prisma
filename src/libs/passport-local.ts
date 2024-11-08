@@ -1,6 +1,6 @@
 
 import { Strategy as LocalStrategy } from 'passport-local';
-import { findUserByEmailAndPassword, createUserToken } from '../services/user.service';
+import { findUserByEmailAndPassword, createUserToken } from '../controllers/user.controller';
 import { LocalStrategyResponse } from '../types/passport';
 
 export const localStrategy = new LocalStrategy({

@@ -29,8 +29,3 @@ export const findUserByEmailAndPassword = async (email: string, password: string
 export const createUserToken = async (user: User) => {
   return await prisma.user.findFirst({ where: { id: user.id } });
 }
-
-export const login = async (email: string, password: string) => {
-  const user = await prisma.user.findFirst({ where: { email, password } });
-  return user
-}

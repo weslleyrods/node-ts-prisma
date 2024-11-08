@@ -1,10 +1,14 @@
 import {Request, Response } from 'express';
+import { User } from "@prisma/client"
+
 import { 
   createUser as createUserService, 
   createUsers as createUsersService,
   getAllUsers as getAllUsersService,
   updateUser as updateUserService,
-  deleteUser as deleteUserService
+  deleteUser as deleteUserService,
+  findUserByEmailAndPassword as findUserByEmailAndPasswordService,
+  createUserToken as createUserTokenService
 } from '../services/user.service';
 
 export const createUser = async(req: Request, res: Response)=> {
@@ -53,5 +57,25 @@ export const deleteUser = async(req: Request, res: Response)=> {
     res.status(200).json(user);
   }catch(error){
     res.status(500).json({erro: "Delete user error"});
+  }
+}
+
+export const findUserByEmailAndPassword = async (email: string, password: string) => {
+  try{
+    const user = await findUserByEmailAndPasswordService(email, password);
+    if(!user)return null
+    return user;
+  }catch(error){
+    console.log('Error finding user', error);
+  }
+}
+
+export const createUserToken = async (user: User) => {
+  try{
+    const token = await createUserTokenService(user);
+    if(!token)return null
+    return token.id
+  }catch(error){
+    console.log('Error creating token', error);
   }
 }
