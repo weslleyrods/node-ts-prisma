@@ -29,3 +29,7 @@ export const findUserByEmailAndPassword = async (email: string, password: string
 export const createUserToken = async (user: User) => {
   return await prisma.user.findFirst({ where: { id: user.id } });
 }
+
+export const findUserByToken = async (token: string) => {
+  return await prisma.user.findFirst({ where: { id: parseInt(token) } });
+}

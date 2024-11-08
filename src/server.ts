@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { route } from './routes';
 import passport from 'passport';
 import { localStrategy  } from './libs/passport-local';
+import { bearerStrategy } from "./libs/passport-bearer";
 
 dotenv.config();
 const server = express();
@@ -12,6 +13,7 @@ server.use(express.static(path.join(__dirname, '../public')));
 server.use(express.json())
 server.use(express.urlencoded({extended: true}))
 server.use(route);
+passport.use(bearerStrategy);
 passport.use(localStrategy);
 server.use(passport.initialize());
 

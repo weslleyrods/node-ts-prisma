@@ -7,7 +7,7 @@ import {
   deleteUser, 
 } from '../controllers/user.controller'
 
-import { localStrategyAuth } from '../middlewares/passport.middleware';
+import { localStrategyAuth, bearerStrategyAuth } from '../middlewares/passport.middleware';
 
 export const route = Router();
 
@@ -15,7 +15,7 @@ route.post('/user', createUser);
 
 route.post('/users', createUsers);
 
-route.get('/users', getAllUsers);
+route.get('/users', bearerStrategyAuth, getAllUsers);
 
 route.put('/user/:id', updateUser);
 

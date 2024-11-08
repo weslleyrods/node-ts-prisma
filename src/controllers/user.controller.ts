@@ -8,7 +8,8 @@ import {
   updateUser as updateUserService,
   deleteUser as deleteUserService,
   findUserByEmailAndPassword as findUserByEmailAndPasswordService,
-  createUserToken as createUserTokenService
+  createUserToken as createUserTokenService,
+  findUserByToken as findUserByTokenService
 } from '../services/user.service';
 
 export const createUser = async(req: Request, res: Response)=> {
@@ -32,10 +33,10 @@ export const createUsers = async(req: Request, res: Response)=> {
 export const getAllUsers = async(req: Request, res: Response)=> {
   try {
     const users = await getAllUsersService();
-    res.status(200).json(users);
+    return res.status(200).json(users);
   }
   catch(error){
-    res.status(500).json({erro: "Get all users error"});
+    return res.status(500).json({erro: "Get all users error"});
   }
 }
 
@@ -66,7 +67,7 @@ export const findUserByEmailAndPassword = async (email: string, password: string
     if(!user)return null
     return user;
   }catch(error){
-    console.log('Error finding user', error);
+    console.log('Error finding user by email and password', error);
   }
 }
 
@@ -77,5 +78,15 @@ export const createUserToken = async (user: User) => {
     return token.id
   }catch(error){
     console.log('Error creating token', error);
+  }
+}
+
+export const findUserByToken = async (token: string) => {
+  try{
+    const user = await findUserByTokenService(token);
+    if(!user)return null
+    return user
+  }catch(error){
+    console.log('Error finding user by token', error);
   }
 }

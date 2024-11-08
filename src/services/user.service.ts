@@ -31,3 +31,7 @@ export const createUserToken = async (user: User) => {
   return await userModel.createUserToken(user);
 }
 
+export const findUserByToken = async (token: string) => {
+  return await userModel.findUserByToken(token);
+}
+
