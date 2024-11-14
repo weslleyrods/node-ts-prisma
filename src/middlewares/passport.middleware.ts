@@ -18,7 +18,6 @@ export const bearerStrategyAuth = (req: Request, res: Response, next: NextFuncti
     (err: any, user: User | false) => {
       if(!user) return res.status(401).json({error: "Unauthorized"});
       req.user = user;
-      res.status(200).json(req.user);
       return next();
   })
   return authRequest(req, res, next);
