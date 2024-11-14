@@ -1,5 +1,6 @@
 import {Request, Response, RequestHandler} from 'express';
 import { User } from "@prisma/client"
+import jwt from 'jsonwebtoken'
 
 import { 
   createUser as createUserService, 
@@ -76,6 +77,20 @@ export const createUserToken = async (user: User) => {
     const token = await createUserTokenService(user);
     if(!token)return null
     return token.id
+  }catch(error){
+    console.log('Error creating token', error);
+  }
+}
+
+export const createUserJWT = async (user: User) => {
+  try{
+    // const user = await createUseruserService(user);
+    const payload = {
+      id: user.id
+    }
+    return jwt.sign(payload, process.env.JWT_TOKEN as string, {
+      expiresIn: '1 minute'
+    })
   }catch(error){
     console.log('Error creating token', error);
   }
