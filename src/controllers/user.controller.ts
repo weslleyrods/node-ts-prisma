@@ -84,7 +84,6 @@ export const createUserToken = async (user: User) => {
 
 export const createUserJWT = async (user: User) => {
   try{
-    // const user = await createUseruserService(user);
     const payload = {
       id: user.id
     }

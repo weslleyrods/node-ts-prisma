@@ -22,3 +22,13 @@ export const bearerStrategyAuth = (req: Request, res: Response, next: NextFuncti
   })
   return authRequest(req, res, next);
 }
+
+export const jwtStrategyAuth = (req: Request, res: Response, next: NextFunction) => {
+  const authRequest = passport.authenticate('jwt', 
+    (err: any, user: User | false) => {
+      if(!user) return res.status(401).json({error: "Unauthorized"});
+      req.user = user;
+      return next();
+    })
+  return authRequest(req, res, next);
+}
