@@ -13,7 +13,7 @@ const upload = multer({ dest: 'uploads/' });
 
 export const route = Router();
 
-route.post('/user', upload.single('photo'), createUser);
+route.post('/user', jwtStrategyAuth, upload.single('photo'), createUser);
 
 route.post('/users', createUsers);
 

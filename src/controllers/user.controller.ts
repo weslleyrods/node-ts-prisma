@@ -1,6 +1,7 @@
 import {Request, Response, RequestHandler, NextFunction} from 'express';
 import { User } from "@prisma/client"
 import jwt from 'jsonwebtoken'
+import sharp from 'sharp'
 
 import { 
   createUser as createUserService, 
@@ -15,12 +16,15 @@ import {
 
 export const createUser = async (req: Request, res: Response, next: NextFunction)=> {
   try {
-    const user = await createUserService(req.body);
-
     if (!req.file) {
       res.status(400).json({ error: "Photo is required" });
       return;
     }
+    sharp(req.file.path)
+    .resize(300, 300, {fit: 'cover'})
+    .toFile(`public/avatars/${req.file.filename}.jpg`)
+
+    const user = await createUserService(req.body);
 
     res.status(200).json(user);
   } catch (error) {
@@ -96,7 +100,7 @@ export const createUserJWT = async (user: User) => {
       id: user.id
     }
     return jwt.sign(payload, process.env.JWT_TOKEN as string, {
-      expiresIn: '1 minute'
+      expiresIn: '1 hour'
     })
   }catch(error){
     console.log('Error creating token', error);
