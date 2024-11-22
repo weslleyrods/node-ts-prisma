@@ -8,10 +8,12 @@ import {
 } from '../controllers/user.controller'
 
 import { localStrategyAuth, bearerStrategyAuth, jwtStrategyAuth } from '../middlewares/passport.middleware';
+import multer from 'multer';
+const upload = multer({ dest: 'uploads/' });
 
 export const route = Router();
 
-route.post('/user', createUser);
+route.post('/user', upload.single('photo'), createUser);
 
 route.post('/users', createUsers);
 

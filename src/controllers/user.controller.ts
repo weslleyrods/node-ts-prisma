@@ -1,4 +1,4 @@
-import {Request, Response, RequestHandler} from 'express';
+import {Request, Response, RequestHandler, NextFunction} from 'express';
 import { User } from "@prisma/client"
 import jwt from 'jsonwebtoken'
 
@@ -13,14 +13,22 @@ import {
   findUserByToken as findUserByTokenService
 } from '../services/user.service';
 
-export const createUser = async(req: Request, res: Response)=> {
+export const createUser = async (req: Request, res: Response, next: NextFunction)=> {
   try {
     const user = await createUserService(req.body);
+
+    if (!req.file) {
+      res.status(400).json({ error: "Photo is required" });
+      return;
+    }
+
     res.status(200).json(user);
-  }catch(error){
-    res.status(500).json({erro: "Creater user error"});
+  } catch (error) {
+    res.status(500).json({ error: "Create user error" });
+    next(error);
   }
-}
+};
+
 
 export const createUsers = async(req: Request, res: Response)=> {
   try {
