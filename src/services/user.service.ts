@@ -1,37 +1,37 @@
 import { Prisma } from "@prisma/client"
 import { User } from "@prisma/client"
 
-import * as userModel from '../models/user.model'
+import * as userDAO from '../DAO/user.dao'
 
 export const createUser = async (data: Prisma.UserCreateInput ) =>{
-  return await userModel.createUser(data);
+  return await userDAO.createUser(data);
 }
 
 export const createUsers = async (users: Prisma.UserCreateInput[] ) =>{
-  return await userModel.createUsers(users);
+  return await userDAO.createUsers(users);
 }
 
 export const getAllUsers = async () =>{
-  return await userModel.getAllUsers();
+  return await userDAO.getAllUsers();
 }
 
 export const updateUser = async (id: number, data: Prisma.UserUpdateInput) => {
-  return await userModel.updateUser(id, data)
+  return await userDAO.updateUser(id, data)
 }
 
 export const deleteUser = async (id: number) => {
-  return await userModel.deleteUser(id)
+  return await userDAO.deleteUser(id)
 }
 
 export const findUserByEmailAndPassword = async (email: string, password: string) => {
-  return await userModel.findUserByEmailAndPassword(email, password);
+  return await userDAO.findUserByEmailAndPassword(email, password);
 }
 
 export const createUserToken = async (user: User) => {
-  return await userModel.createUserToken(user);
+  return await userDAO.createUserToken(user);
 }
 
 export const findUserByToken = async (token: string) => {
-  return await userModel.findUserByToken(token);
+  return await userDAO.findUserByToken(token);
 }
 
