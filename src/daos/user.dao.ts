@@ -1,37 +1,35 @@
+import { prisma } from "../libs/prisma"
 import { Prisma } from "@prisma/client"
 import { User } from "@prisma/client"
 
-import * as userDAO from '../daos/user.dao'
-
 export const createUser = async (data: Prisma.UserCreateInput ) =>{
-  return await userDAO.createUser(data);
+  return await prisma.user.create({ data });
 }
 
 export const createUsers = async (users: Prisma.UserCreateInput[] ) =>{
-  return await userDAO.createUsers(users);
+  return await prisma.user.createMany({data: users, skipDuplicates: true});
 }
 
 export const getAllUsers = async () =>{
-  return await userDAO.getAllUsers();
+  return await prisma.user.findMany();
 }
 
 export const updateUser = async (id: number, data: Prisma.UserUpdateInput) => {
-  return await userDAO.updateUser(id, data)
+  return await prisma.user.update({ where: { id }, data });
 }
 
 export const deleteUser = async (id: number) => {
-  return await userDAO.deleteUser(id)
+  return await prisma.user.delete({ where: { id } });
 }
 
 export const findUserByEmailAndPassword = async (email: string, password: string) => {
-  return await userDAO.findUserByEmailAndPassword(email, password);
+  return await prisma.user.findFirst({ where: { email, password } });
 }
 
 export const createUserToken = async (user: User) => {
-  return await userDAO.createUserToken(user);
+  return await prisma.user.findFirst({ where: { id: user.id } });
 }
 
 export const findUserByToken = async (token: string) => {
-  return await userDAO.findUserByToken(token);
+  return await prisma.user.findFirst({ where: { id: parseInt(token) } });
 }
-
